@@ -400,6 +400,20 @@ void LCD_DisplaySdMemory(void)
   }
 }
 
+void LCD_DisplayHostname(void)
+{
+   char hostname[256];  // Buffer to store hostname
+
+   OLED_ClearLint(2,4);
+    if (gethostname(hostname, sizeof(hostname)) == 0) {
+        OLED_ShowString(0,3,hostname,8);
+    } else {
+        OLED_ShowString(0,3,"localhost",8);
+    }
+}
+
+
+
 /*
 *According to the information
 */
@@ -415,7 +429,9 @@ void LCD_Display(unsigned char symbol)
     break;
     case 2:
       LCD_DisplaySdMemory();
-    break;
+      break;
+    case 3:
+      LCD_DisplayHostname();
     default:
     break;
   }
